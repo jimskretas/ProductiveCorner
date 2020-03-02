@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import TaskList from "./TaskList";
 import initialData from "./initial-data";
 import { DragDropContext } from "react-beautiful-dnd";
 
-class App extends React.Component {
-  state = initialData;
+export default function App() {
+  //state = initialData;
+  const [state, setState] = useState(initialData);
 
-  onDragEnd = result => {
+  function onDragEnd(result) {
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -21,7 +22,7 @@ class App extends React.Component {
       return;
     }
 
-    const column = this.state.columns[source.droppableId];
+    const column = state.columns[source.droppableId];
     const newTaskIds = Array.from(column.taskIds);
     newTaskIds.splice(source.index, 1);
     newTaskIds.splice(destination.index, 0, draggableId);
@@ -32,28 +33,26 @@ class App extends React.Component {
     };
 
     const newState = {
-      ...this.state,
+      ...state,
       columns: {
-        ...this.state.columns,
+        ...state.columns,
         [newColumn.id]: newColumn
       }
     };
 
-    this.setState(newState);
-  };
-
-  render() {
-    return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        {this.state.columnOrder.map(columnId => {
-          const column = this.state.columns[columnId];
-          const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
-
-          return <TaskList key={column.id} column={column} tasks={tasks} />;
-        })}
-      </DragDropContext>
-    );
+    setState(newState);
   }
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      {state.columnOrder.map(columnId => {
+        const column = state.columns[columnId];
+        const tasks = column.taskIds.map(taskId => state.tasks[taskId]);
+
+        return <TaskList key={column.id} column={column} tasks={tasks} />;
+      })}
+    </DragDropContext>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById("app"));
