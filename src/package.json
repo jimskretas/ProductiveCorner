@@ -1,0 +1,15 @@
+{
+  "name": "Usage",
+  "version": "3.0.0",
+  "description": "Live demo",
+  "keywords": [],
+  "homepage": "https://codesandbox.io/s/4j7m47vlm4",
+  "main": "index.js",
+  "dependencies": {
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "4.9.1",
+    "react": "latest",
+    "react-beautiful-dnd": "13.0.0",
+    "react-dom": "latest"
+  }
+}

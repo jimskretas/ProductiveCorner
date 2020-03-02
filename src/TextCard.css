@@ -1,0 +1,11 @@
+.cardContainer {
+  position: relative;
+}
+
+.trashButton {
+  display: none;
+}
+
+.cardContainer:hover .trashButton {
+  display: inline;
+}
