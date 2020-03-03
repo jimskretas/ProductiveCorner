@@ -34,7 +34,7 @@ export default function TextCard(props) {
           ref={provided.innerRef}
         >
           <Card className={classes.root}>
-            <Grid container spacing={0}>
+            <Grid container spacing={0} alignItems="center">
               <Grid item xs={2}>
                 <IconButton
                   {...provided.dragHandleProps}
