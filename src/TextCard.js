@@ -11,8 +11,9 @@ import { Draggable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: 5,
-    paddingRight: 5
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    backgroundColor: "#F8F9F9"
   },
   margin: {
     margin: theme.spacing(1)
