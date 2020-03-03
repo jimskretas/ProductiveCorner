@@ -10,6 +10,7 @@
     "@material-ui/icons": "4.9.1",
     "react": "latest",
     "react-beautiful-dnd": "13.0.0",
+    "react-contenteditable": "3.3.3",
     "react-dom": "latest"
   },
   "devDependencies": {

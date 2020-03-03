@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
 import "./TextCard.css";
@@ -11,12 +12,13 @@ import { Draggable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: theme.spacing(1),
+    paddingLeft: theme.spacing(0),
     paddingRight: theme.spacing(1),
     backgroundColor: "#F8F9F9"
   },
   margin: {
-    margin: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 }));
 
@@ -29,12 +31,21 @@ export default function TextCard(props) {
         <div
           className="cardContainer"
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
           <Card className={classes.root}>
             <Grid container spacing={0}>
-              <Grid item xs={10}>
+              <Grid item xs={2}>
+                <IconButton
+                  {...provided.dragHandleProps}
+                  disableRipple
+                  aria-label="delete"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <DragIndicatorIcon fontSize="small" />
+                </IconButton>
+              </Grid>
+              <Grid item xs={8}>
                 <InputBase
                   className={classes.margin}
                   multiline
@@ -43,7 +54,10 @@ export default function TextCard(props) {
                 />
               </Grid>
               <Grid item xs={2} className="trashButton">
-                <IconButton aria-label="delete">
+                <IconButton
+                  aria-label="delete"
+                  style={{ backgroundColor: "transparent" }}
+                >
                   <DeleteIcon fontSize="small" />
                 </IconButton>
               </Grid>
