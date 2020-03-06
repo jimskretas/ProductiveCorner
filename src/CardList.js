@@ -3,6 +3,8 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import TextCard from "./TextCard";
 
@@ -16,10 +18,13 @@ const useStyles = makeStyles(theme => ({
   cardTitle: {
     paddingBottom: theme.spacing(0),
     paddingTop: theme.spacing(1)
+  },
+  addButton: {
+    backgroundColor: "#EFEFF0"
   }
 }));
 
-export default function TaskList(props) {
+export default function CardList(props) {
   const classes = useStyles();
 
   return (
@@ -28,14 +33,24 @@ export default function TaskList(props) {
       <Droppable droppableId={props.column.id}>
         {provided => (
           <CardContent ref={provided.innerRef} {...provided.droppableProps}>
-            {props.tasks.map((task, index) => (
-              <TextCard key={task.id} task={task} index={index} />
+            {props.cards.map((card, index) => (
+              <TextCard key={card.id} card={card} index={index} />
             ))}
             {provided.placeholder}
           </CardContent>
         )}
       </Droppable>
-      <CardActions />
+      <CardActions>
+        <Button
+          className={classes.addButton}
+          disableElevation
+          fullWidth
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add Card
+        </Button>
+      </CardActions>
     </Card>
   );
 }

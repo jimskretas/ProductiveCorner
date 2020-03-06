@@ -4,10 +4,9 @@ import Card from "@material-ui/core/Card";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
 import "./TextCard.css";
-
+import DeleteCardButton from "./DeleteCardButton";
 import { Draggable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +25,7 @@ export default function TextCard(props) {
   const classes = useStyles();
 
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable draggableId={props.card.id} index={props.index}>
       {provided => (
         <div
           className="cardContainer"
@@ -45,21 +44,16 @@ export default function TextCard(props) {
                   <DragIndicatorIcon fontSize="small" />
                 </IconButton>
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={9}>
                 <InputBase
                   className={classes.margin}
                   multiline
                   fullWidth
-                  defaultValue={props.task.content}
+                  defaultValue={props.card.content}
                 />
               </Grid>
-              <Grid item xs={2} className="trashButton">
-                <IconButton
-                  aria-label="delete"
-                  style={{ backgroundColor: "transparent" }}
-                >
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
+              <Grid item xs={1} className="trashButton">
+                <DeleteCardButton id={props.card.id} />
               </Grid>
             </Grid>
           </Card>
