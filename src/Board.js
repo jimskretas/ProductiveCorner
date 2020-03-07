@@ -75,13 +75,15 @@ export default function Board() {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      {state.columnOrder.map(columnId => {
-        const column = state.columns[columnId];
-        const cards = column.cardIds.map(cardId => state.cards[cardId]);
+    <div style={{ display: "flex", overflowx: "auto" }}>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {state.columnOrder.map(columnId => {
+          const column = state.columns[columnId];
+          const cards = column.cardIds.map(cardId => state.cards[cardId]);
 
-        return <CardList key={column.id} column={column} cards={cards} />;
-      })}
-    </DragDropContext>
+          return <CardList key={column.id} column={column} cards={cards} />;
+        })}
+      </DragDropContext>
+    </div>
   );
 }

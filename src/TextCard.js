@@ -11,12 +11,12 @@ import { Draggable } from "react-beautiful-dnd";
 import { BoardContext } from "./BoardContext";
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  card: {
     paddingLeft: theme.spacing(0),
     paddingRight: theme.spacing(1),
     backgroundColor: "#F8F9F9"
   },
-  margin: {
+  inputMargin: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
   }
@@ -54,7 +54,7 @@ export default function TextCard(props) {
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <Card className={classes.root}>
+          <Card className={classes.card}>
             <Grid container spacing={0} alignItems="center">
               <Grid item xs={2}>
                 <IconButton
@@ -70,7 +70,7 @@ export default function TextCard(props) {
                 <InputBase
                   onChange={e => handleOnChange(e.target.value)}
                   onBlur={() => updateCard(props.card.id)}
-                  className={classes.margin}
+                  className={classes.inputMargin}
                   multiline
                   fullWidth
                   defaultValue={props.card.content}
