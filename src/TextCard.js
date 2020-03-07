@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import InputBase from "@material-ui/core/InputBase";
@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import "./TextCard.css";
 import DeleteCardButton from "./DeleteCardButton";
 import { Draggable } from "react-beautiful-dnd";
+import { BoardContext } from "./BoardContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +24,27 @@ const useStyles = makeStyles(theme => ({
 
 export default function TextCard(props) {
   const classes = useStyles();
+  const [content, setContent] = useState(props.card.content);
+  const [state, setState] = useContext(BoardContext);
+
+  function updateCard(id) {
+    // Update state with the new card content if it changed
+    let newCards = state.cards;
+    let oldStateContent = newCards[id].content;
+    if (oldStateContent !== content) {
+      newCards[id] = { ...newCards[id], content: content };
+      let newState = {
+        ...state,
+        cards: newCards
+      };
+
+      setState(newState);
+    }
+  }
+
+  function handleOnChange(value) {
+    setContent(value);
+  }
 
   return (
     <Draggable draggableId={props.card.id} index={props.index}>
@@ -46,6 +68,8 @@ export default function TextCard(props) {
               </Grid>
               <Grid item xs={9}>
                 <InputBase
+                  onChange={e => handleOnChange(e.target.value)}
+                  onBlur={() => updateCard(props.card.id)}
                   className={classes.margin}
                   multiline
                   fullWidth

@@ -7,9 +7,9 @@ export default function DeleteCardButton(props) {
   const [state, setState] = useContext(BoardContext);
 
   function deleteCard(id) {
-    let data = state.cards;
+    let cards = state.cards;
 
-    delete data[id];
+    delete cards[id];
     let columns = state.columns;
     for (let column in columns) {
       let cardIndex = columns[column].cardIds.indexOf(id);
@@ -20,7 +20,7 @@ export default function DeleteCardButton(props) {
     }
     let newState = {
       cards: {
-        data
+        cards
       },
       columns: {
         columns

@@ -32,7 +32,8 @@ export const BoardProvider = props => {
         cardIds: ["card4"]
       }
     },
-    columnOrder: ["backlog", "todo", "doing", "done"]
+    columnOrder: ["backlog", "todo", "doing", "done"],
+    cardNumber: 4
   });
 
   return (

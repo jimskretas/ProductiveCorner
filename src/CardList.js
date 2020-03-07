@@ -3,10 +3,9 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
 import TextCard from "./TextCard";
+import AddCardButton from "./AddCardButton";
 
 import { Droppable } from "react-beautiful-dnd";
 
@@ -18,9 +17,6 @@ const useStyles = makeStyles(theme => ({
   cardTitle: {
     paddingBottom: theme.spacing(0),
     paddingTop: theme.spacing(1)
-  },
-  addButton: {
-    backgroundColor: "#EFEFF0"
   }
 }));
 
@@ -41,15 +37,7 @@ export default function CardList(props) {
         )}
       </Droppable>
       <CardActions>
-        <Button
-          className={classes.addButton}
-          disableElevation
-          fullWidth
-          variant="contained"
-          startIcon={<AddIcon />}
-        >
-          Add Card
-        </Button>
+        <AddCardButton id={props.column.id} />
       </CardActions>
     </Card>
   );
