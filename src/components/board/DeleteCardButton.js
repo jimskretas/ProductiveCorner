@@ -4,6 +4,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { BoardContext } from "./BoardContext";
 
 export default function DeleteCardButton(props) {
+  const { id } = props;
   const [state, setState] = useContext(BoardContext);
 
   function deleteCard(id) {
@@ -34,7 +35,7 @@ export default function DeleteCardButton(props) {
   return (
     <IconButton
       aria-label="delete"
-      onClick={() => deleteCard(props.id)}
+      onClick={() => deleteCard(id)}
       style={{ backgroundColor: "transparent" }}
     >
       <DeleteIcon fontSize="small" />

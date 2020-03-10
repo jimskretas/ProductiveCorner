@@ -23,8 +23,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function TextCard(props) {
+  const { card, index } = props;
   const classes = useStyles();
-  const [content, setContent] = useState(props.card.content);
+  const [content, setContent] = useState(card.content);
   const [state, setState] = useContext(BoardContext);
 
   function updateCard(id) {
@@ -47,7 +48,7 @@ export default function TextCard(props) {
   }
 
   return (
-    <Draggable draggableId={props.card.id} index={props.index}>
+    <Draggable draggableId={card.id} index={index}>
       {provided => (
         <div
           className="cardContainer"
@@ -69,15 +70,15 @@ export default function TextCard(props) {
               <Grid item xs={9}>
                 <InputBase
                   onChange={e => handleOnChange(e.target.value)}
-                  onBlur={() => updateCard(props.card.id)}
+                  onBlur={() => updateCard(card.id)}
                   className={classes.inputMargin}
                   multiline
                   fullWidth
-                  defaultValue={props.card.content}
+                  defaultValue={card.content}
                 />
               </Grid>
               <Grid item xs={1} className="trashButton">
-                <DeleteCardButton id={props.card.id} />
+                <DeleteCardButton id={card.id} />
               </Grid>
             </Grid>
           </Card>

@@ -22,19 +22,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CardList(props) {
+  const { column, cards } = props;
   const classes = useStyles();
 
   return (
     <Grid item>
       <Card className={classes.column}>
-        <CardHeader
-          title={props.column.title}
-          className={classes.columnTitle}
-        />
-        <Droppable droppableId={props.column.id}>
+        <CardHeader title={column.title} className={classes.columnTitle} />
+        <Droppable droppableId={column.id}>
           {provided => (
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
-              {props.cards.map((card, index) => (
+              {cards.map((card, index) => (
                 <TextCard key={card.id} card={card} index={index} />
               ))}
               {provided.placeholder}
@@ -42,7 +40,7 @@ export default function CardList(props) {
           )}
         </Droppable>
         <CardActions>
-          <AddCardButton id={props.column.id} />
+          <AddCardButton id={column.id} />
         </CardActions>
       </Card>
     </Grid>
