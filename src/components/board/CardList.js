@@ -13,16 +13,17 @@ import { BoardContext } from "./BoardContext";
 
 const useStyles = makeStyles(theme => ({
   column: {
-    backgroundColor: "#EFEFF0",
+    backgroundColor: "#EBECF0",
     margin: theme.spacing(1),
-    width: "350px"
+    marginTop: theme.spacing(9),
+    width: "320px"
   },
   columnTitle: {
     paddingBottom: theme.spacing(0),
     paddingTop: theme.spacing(1)
   },
   addButton: {
-    backgroundColor: "#EFEFF0"
+    backgroundColor: "#EBECF0"
   }
 }));
 

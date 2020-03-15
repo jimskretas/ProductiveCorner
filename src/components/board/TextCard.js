@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   card: {
     paddingLeft: theme.spacing(0),
     paddingRight: theme.spacing(1),
-    backgroundColor: "#F8F9F9"
+    backgroundColor: "FFF"
   },
   inputMargin: {
     marginTop: theme.spacing(1),
