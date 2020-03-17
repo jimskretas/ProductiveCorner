@@ -28,7 +28,7 @@ export function deleteCardFunction(board, cardId) {
 export function addCardFunction(board, colId) {
   let newCardNumber = board.cardNumber + 1;
   const id = "card" + newCardNumber;
-
+  console.log("id: " + id);
   // Add a new card
   let newCards = board.cards;
   newCards[id] = { id: id, content: "" };
@@ -36,7 +36,7 @@ export function addCardFunction(board, colId) {
   // Add the cardId at the end of cardIds in the props.colId column
   let newColumns = board.columns;
   newColumns[colId].cardIds.push(id);
-
+  console.log(newColumns);
   let newState = {
     ...board,
     cards: newCards,
@@ -48,6 +48,7 @@ export function addCardFunction(board, colId) {
 }
 
 export function moveCardFunction(board, result) {
+  // console.log(result);
   const { destination, source, draggableId } = result;
 
   if (!destination) {

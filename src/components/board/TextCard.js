@@ -48,7 +48,7 @@ export default function TextCard(props) {
                   <DragIndicatorIcon fontSize="small" />
                 </IconButton>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={8}>
                 <InputBase
                   onChange={e => setContent(e.target.value)}
                   onBlur={() =>
@@ -64,7 +64,7 @@ export default function TextCard(props) {
                   defaultValue={card.content}
                 />
               </Grid>
-              <Grid item xs={1} className="trashButton">
+              <Grid item xs={2} className="trashButton">
                 <IconButton
                   aria-label="delete"
                   onClick={() =>
