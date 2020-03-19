@@ -44,10 +44,11 @@ export default function TextCard(props) {
                       content: content
                     })
                   }
-                  multiline
+                  // multiline
                   fullWidth
                   defaultValue={card.content}
                 />
+                {/* {card.content} */}
               </Grid>
               <Grid item xs={2} className="trashButton">
                 <IconButton
