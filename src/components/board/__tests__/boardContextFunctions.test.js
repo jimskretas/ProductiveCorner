@@ -41,7 +41,7 @@ beforeEach(() => {
   };
 });
 
-it("Should be able to delete the card", function() {
+it("Should be able to delete a card", function() {
   let cardId = "card4";
   let targetState = {
     cards: {
