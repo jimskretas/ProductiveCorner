@@ -3,7 +3,7 @@
   "version": "0.0.114",
   "description": "Live demo",
   "keywords": [],
-  "homepage": "https://codesandbox.io/s/4j7m47vlm4",
+  "homepage": "https://productive-corner.netlify.com",
   "main": "index.js",
   "dependencies": {
     "@material-ui/core": "latest",
