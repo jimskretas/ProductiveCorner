@@ -32,9 +32,23 @@ describe("Board Integration Tests", () => {
   it("Should add a card", () => {
     const { getAllByDisplayValue, getAllByRole } = renderBoard();
 
-    const addCardButton = getAllByRole("button", { name: "Add Card" });
-    fireEvent.click(addCardButton[0]);
+    let addCardButton = getAllByRole("button", { name: "Add Card" })[0];
+    const cardCount = getAllByRole("button", { name: "delete-card" }).length;
+    fireEvent.click(addCardButton);
+    const newCardCount = getAllByRole("button", { name: "delete-card" }).length;
 
     expect(getAllByDisplayValue("").length).toBe(1);
+    expect(newCardCount).toBe(cardCount + 1);
+  });
+
+  it("Should delete a card", () => {
+    const { getAllByRole } = renderBoard();
+
+    let deleteCardButtons = getAllByRole("button", { name: "delete-card" });
+    const cardCount = deleteCardButtons.length;
+    fireEvent.click(deleteCardButtons[0]);
+    deleteCardButtons = getAllByRole("button", { name: "delete-card" });
+
+    expect(deleteCardButtons.length).toBe(cardCount - 1);
   });
 });

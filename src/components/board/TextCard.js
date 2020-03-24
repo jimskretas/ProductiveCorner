@@ -52,7 +52,7 @@ export default function TextCard(props) {
               </Grid>
               <Grid item xs={2} className="trashButton">
                 <IconButton
-                  aria-label="delete"
+                  aria-label="delete-card"
                   onClick={() =>
                     dispatch({ type: "DELETE_CARD", cardId: card.id })
                   }
