@@ -1,17 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Board from "./components/board/Board";
-import NavBar from "./components/navbar/NavBar";
-import { BoardProvider } from "./components/board/BoardContext";
+import AppPage from "./components/board/AppPage";
+import LoginPage from "./components/auth/LoginPage";
+import RegisterPage from "./components/auth/RegisterPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export default function App() {
   return (
-    <div>
-      <NavBar />
-      <BoardProvider>
-        <Board />
-      </BoardProvider>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/register">
+          <RegisterPage />
+        </Route>
+        <Route path="/">
+          <AppPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
