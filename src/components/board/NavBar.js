@@ -27,7 +27,7 @@ export default function ButtonAppBar() {
             Productive Corner
           </Typography>
           <Tooltip title="Productivity Tips">
-            <IconButton color="inherit" component={RouterLink} to="/login">
+            <IconButton color="inherit">
               <InfoIcon />
             </IconButton>
           </Tooltip>
