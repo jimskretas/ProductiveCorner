@@ -1,18 +1,18 @@
-import React, { useReducer, createContext } from "react";
+import React, { useReducer, createContext, useEffect } from "react";
 import {
   deleteCardFunction,
   updateCardFunction,
   addCardFunction,
   moveCardFunction
 } from "./BoardContextFunctions";
+import { getBoard, updateBoard } from "../../apiUtils/boardActions";
+import { useIsFirstRender } from "../../apiUtils/useIsFirstRender";
+
 export const BoardContext = createContext();
 
 const initialState = {
   cards: {
-    card1: { id: "card1", content: "Take out the garbage" },
-    card2: { id: "card2", content: "Watch para 5" },
-    card3: { id: "card3", content: "Charge phone" },
-    card4: { id: "card4", content: "Cook dinner" }
+    card0: { id: "card0", content: "" }
   },
   columns: {
     backlog: {
@@ -23,21 +23,21 @@ const initialState = {
     todo: {
       id: "todo",
       title: "To do",
-      cardIds: ["card1", "card2"]
+      cardIds: []
     },
     doing: {
       id: "doing",
       title: "Doing",
-      cardIds: ["card3"]
+      cardIds: []
     },
     done: {
       id: "done",
       title: "Done",
-      cardIds: ["card4"]
+      cardIds: []
     }
   },
   columnOrder: ["backlog", "todo", "doing", "done"],
-  cardNumber: 4
+  cardNumber: 0
 };
 
 const reducer = (board, action) => {
@@ -50,6 +50,8 @@ const reducer = (board, action) => {
       return addCardFunction(board, action.columnId);
     case "MOVE_CARD":
       return moveCardFunction(board, action.result);
+    case "UPDATE_BOARD":
+      return action.board;
     default:
       return board;
   }
@@ -57,6 +59,27 @@ const reducer = (board, action) => {
 
 export const BoardProvider = props => {
   const [board, dispatch] = useReducer(reducer, initialState);
+  const isFirstRender = useIsFirstRender();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getBoard();
+      // console.log(response);
+      if (response) dispatch({ type: "UPDATE_BOARD", board: response });
+    }
+    fetchData();
+  }, []);
+
+  //works as useEffect but only after the first render
+  //using it to send updates to API every time board changes
+  useEffect(() => {
+    async function sendData() {
+      const response = await updateBoard(board);
+      // console.log(response);
+    }
+
+    if (!isFirstRender) sendData();
+  }, [board, isFirstRender]);
 
   return (
     <BoardContext.Provider value={[board, dispatch]}>

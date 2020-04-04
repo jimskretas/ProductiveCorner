@@ -1,6 +1,5 @@
 export function deleteCardFunction(board, cardId) {
   let cards = board.cards;
-
   delete cards[cardId];
   let columns = board.columns;
   for (let column in columns) {

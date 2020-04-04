@@ -4,23 +4,16 @@ import AppPage from "./components/board/AppPage";
 import LoginPage from "./components/auth/LoginPage";
 import RegisterPage from "./components/auth/RegisterPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import BoardRoute from "./apiUtils/BoardRoute";
+import LoginRoute from "./apiUtils/LoginRoute";
 
-export default function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/register">
-          <RegisterPage />
-        </Route>
-        <Route path="/">
-          <AppPage />
-        </Route>
-      </Switch>
-    </Router>
-  );
-}
-
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <Router>
+    <Switch>
+      <LoginRoute path="/login" component={LoginPage} />
+      <Route path="/register" component={RegisterPage} />
+      <BoardRoute exact path="/" component={AppPage} />
+    </Switch>
+  </Router>,
+  document.getElementById("app")
+);
