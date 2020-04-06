@@ -14,6 +14,12 @@ export default function TextCard(props) {
   const [content, setContent] = useState(card.content);
   const [board, dispatch] = useContext(BoardContext);
 
+  function handleKeyPress(e) {
+    if (e.keyCode === 13) {
+      e.target.blur();
+    }
+  }
+
   return (
     <Draggable draggableId={card.id} index={index}>
       {provided => (
@@ -27,7 +33,6 @@ export default function TextCard(props) {
               <Grid item xs={2}>
                 <IconButton
                   {...provided.dragHandleProps}
-                  disableRipple
                   aria-label="handle"
                   style={{ backgroundColor: "transparent" }}
                 >
@@ -37,6 +42,7 @@ export default function TextCard(props) {
               <Grid item xs={8}>
                 <InputBase
                   onChange={e => setContent(e.target.value)}
+                  onKeyDown={e => handleKeyPress(e)}
                   onBlur={() =>
                     dispatch({
                       type: "UPDATE_CARD",
@@ -44,11 +50,9 @@ export default function TextCard(props) {
                       content: content
                     })
                   }
-                  // multiline
                   fullWidth
                   defaultValue={card.content}
                 />
-                {/* {card.content} */}
               </Grid>
               <Grid item xs={2} className="trashButton">
                 <IconButton

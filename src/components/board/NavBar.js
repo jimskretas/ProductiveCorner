@@ -9,6 +9,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Link as RouterLink } from "react-router-dom";
 import { logout } from "../../apiUtils/authActions";
+// import InfoModal from "./InfoModal";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -17,7 +18,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ButtonAppBar() {
+  // const [open, setOpen] = useState(false) //for info modal;
   const classes = useStyles();
+
+  // const handleModal = () => {
+  //   setOpen(!open); // for info modal
+  // };
 
   return (
     <div className={classes.root}>
@@ -26,11 +32,10 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Productive Corner
           </Typography>
-          <Tooltip title="Productivity Tips">
-            <IconButton color="inherit">
-              <InfoIcon />
-            </IconButton>
-          </Tooltip>
+          <IconButton color="inherit" disabled>
+            <InfoIcon />
+          </IconButton>
+          {/* <InfoModal open={open} handleModal={handleModal} /> */}
           <Tooltip title="Logout">
             <IconButton
               onClick={logout}

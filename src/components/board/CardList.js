@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
+import Tooltip from "@material-ui/core/Tooltip";
 import { makeStyles } from "@material-ui/core/styles";
 import TextCard from "./TextCard";
-import AddIcon from "@material-ui/icons/Add";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import TimerIcon from "@material-ui/icons/Timer";
 import { Droppable } from "react-beautiful-dnd";
 import { BoardContext } from "./BoardContext";
 
@@ -20,7 +22,18 @@ const useStyles = makeStyles(theme => ({
   },
   columnTitle: {
     paddingBottom: theme.spacing(0),
-    paddingTop: theme.spacing(1)
+    paddingTop: theme.spacing(1),
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    fontFamily: "Segoe UI",
+    fontSize: "1.2rem",
+    fontWeight: "600"
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   addButton: {
     backgroundColor: "#EBECF0"
@@ -35,7 +48,13 @@ export default function CardList(props) {
   return (
     <Grid item>
       <Card className={classes.column}>
-        <CardHeader title={column.title} className={classes.columnTitle} />
+        <CardHeader
+          disableTypography
+          title={column.title}
+          className={classes.columnTitle}
+        >
+          <h2>{column.title}</h2>
+        </CardHeader>
         <Droppable droppableId={column.id}>
           {provided => (
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
@@ -46,18 +65,25 @@ export default function CardList(props) {
             </CardContent>
           )}
         </Droppable>
-        <CardActions>
-          <Button
-            data-test="buttonComponent"
+        <CardActions className={classes.buttons}>
+          <Tooltip title="Add a text card">
+            <IconButton
+              className={classes.addButton}
+              onClick={() =>
+                dispatch({ type: "ADD_CARD", columnId: column.id })
+              }
+              variant="contained"
+            >
+              <NoteAddIcon />
+            </IconButton>
+          </Tooltip>
+          <IconButton
             className={classes.addButton}
-            onClick={() => dispatch({ type: "ADD_CARD", columnId: column.id })}
-            disableElevation
-            fullWidth
             variant="contained"
-            startIcon={<AddIcon />}
+            disabled
           >
-            Add Card
-          </Button>
+            <TimerIcon /> {/* Check react-component-countdown-timer */}
+          </IconButton>
         </CardActions>
       </Card>
     </Grid>
