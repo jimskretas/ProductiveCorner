@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core/styles";
-import TextCard from "./TextCard";
-import NoteAddIcon from "@material-ui/icons/NoteAdd";
-import TimerIcon from "@material-ui/icons/Timer";
 import { Droppable } from "react-beautiful-dnd";
+
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import { makeStyles } from "@material-ui/core/styles";
+import Tooltip from "@material-ui/core/Tooltip";
+import TimerIcon from "@material-ui/icons/Timer";
+
 import { BoardContext } from "./BoardContext";
+import TextCard from "./TextCard";
 
 const useStyles = makeStyles(theme => ({
   column: {

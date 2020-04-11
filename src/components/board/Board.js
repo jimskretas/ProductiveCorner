@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
-import CardList from "./CardList";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { DragDropContext } from "react-beautiful-dnd";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { BoardContext } from "./BoardContext";
+import CardList from "./CardList";
 
 export default function Board() {
   const [board, dispatch] = useContext(BoardContext);

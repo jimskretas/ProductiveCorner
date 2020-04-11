@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AppPage from "./components/board/AppPage";
-import LoginPage from "./components/auth/LoginPage";
-import RegisterPage from "./components/auth/RegisterPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import BoardRoute from "./apiUtils/BoardRoute";
 import LoginRoute from "./apiUtils/LoginRoute";
+import LoginPage from "./components/auth/LoginPage";
+import RegisterPage from "./components/auth/RegisterPage";
+import AppPage from "./components/board/AppPage";
 
 ReactDOM.render(
   <Router>

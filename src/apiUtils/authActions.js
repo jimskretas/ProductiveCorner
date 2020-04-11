@@ -15,7 +15,6 @@ export function login(data) {
   return axios(options)
     .then(response => {
       const token = response.data;
-      localStorage.setItem("jwtToken", token);
       setAuthorizationToken(token);
       return 1;
     })
@@ -53,5 +52,5 @@ export function register(data) {
 }
 
 export function logout() {
-  localStorage.clear();
+  window.localStorage.clear();
 }

@@ -6,7 +6,7 @@ export function getBoard() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("jwtToken")
+      "auth-token": window.localStorage.getItem("jwtToken")
     },
     crossdomain: true
   };
@@ -32,7 +32,7 @@ export function updateBoard(board) {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "auth-token": localStorage.getItem("jwtToken")
+      "auth-token": window.localStorage.getItem("jwtToken")
     },
     data: board,
     crossdomain: true
@@ -40,7 +40,7 @@ export function updateBoard(board) {
 
   return axios(options)
     .then(response => {
-      return 1;
+      return 1; // Success!
     })
     .catch(err => {
       if (err.response) {

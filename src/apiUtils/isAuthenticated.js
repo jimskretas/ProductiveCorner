@@ -1,7 +1,7 @@
 import jwt from "jwt-decode";
 
 export function isAuthenticated() {
-  let token = localStorage.getItem("jwtToken");
+  let token = window.localStorage.getItem("jwtToken");
   if (token) {
     let tokenExpiration = jwt(token).exp;
     let dateNow = new Date();

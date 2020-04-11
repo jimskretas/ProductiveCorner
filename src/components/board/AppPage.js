@@ -1,7 +1,8 @@
 import React from "react";
+
 import Board from "./Board";
-import NavBar from "./NavBar";
 import { BoardProvider } from "./BoardContext";
+import NavBar from "./NavBar";
 
 export default function AppPage() {
   return (
