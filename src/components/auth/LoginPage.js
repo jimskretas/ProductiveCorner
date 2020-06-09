@@ -73,9 +73,10 @@ export default function LoginPage() {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
               name="username"
+              label="Username"
+              type="username"
+              id="username"
               autoComplete="username"
               autoFocus
             />
