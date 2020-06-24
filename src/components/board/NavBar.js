@@ -41,6 +41,7 @@ export default function ButtonAppBar() {
           <Tooltip title="Logout">
             <IconButton
               onClick={logout}
+              name="logout"
               color="inherit"
               component={RouterLink}
               to="/login"
