@@ -15,12 +15,12 @@ import TimerIcon from "@material-ui/icons/Timer";
 import { BoardContext } from "./BoardContext";
 import TextCard from "./TextCard";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   column: {
     backgroundColor: "#EBECF0",
     margin: theme.spacing(1),
     marginTop: theme.spacing(9),
-    width: "320px"
+    width: "320px",
   },
   columnTitle: {
     paddingBottom: theme.spacing(0),
@@ -30,16 +30,16 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     fontFamily: "Segoe UI",
     fontSize: "1.2rem",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   buttons: {
     display: "flex",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
   },
   addButton: {
-    backgroundColor: "#EBECF0"
-  }
+    backgroundColor: "#EBECF0",
+  },
 }));
 
 export default function CardList(props) {
@@ -49,7 +49,7 @@ export default function CardList(props) {
 
   return (
     <Grid item>
-      <Card className={classes.column}>
+      <Card data-cy={column.id} className={classes.column}>
         <CardHeader
           disableTypography
           title={column.title}
@@ -58,7 +58,7 @@ export default function CardList(props) {
           <h2>{column.title}</h2>
         </CardHeader>
         <Droppable droppableId={column.id}>
-          {provided => (
+          {(provided) => (
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
               {cards.map((card, index) => (
                 <TextCard key={card.id} card={card} index={index} />
