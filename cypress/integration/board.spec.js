@@ -1,27 +1,44 @@
-before(() => {
-  cy.login();
-  cy.saveLocalStorage();
-});
-
-beforeEach(() => {
-  cy.restoreLocalStorage();
-});
-
 describe("Testing basic board features", () => {
-  it("Create new card", () => {
+  before(() => {
+    cy.login();
+    cy.saveLocalStorage();
     cy.visit("https://productive-corner.netlify.app");
-    cy.get("[data-cy=Backlog]");
   });
 
-  //   it("Filling user login credentials, submit & redirecting to main app", () => {
-  //     cy.visit("https://productive-corner.netlify.app");
+  beforeEach(() => {
+    cy.restoreLocalStorage();
+  });
 
-  //     cy.get("form").within(() => {
-  //       cy.get('input[name="username"]').type("testuser");
-  //       cy.get('input[name="password"]').type("123456");
-  //       cy.get('button[type="submit"]').click();
-  //     });
+  it("Create new card", () => {
+    // alias so i can use the cardCount later
+    cy.get(".cardContainer").its("length").as("cardCount");
 
-  //     cy.url().should("eq", "https://productive-corner.netlify.app/");
-  //   });
+    cy.get("[data-cy=backlog]").within(() => {
+      cy.get('button[title="Add a text card"]').click();
+    });
+
+    cy.get("@cardCount").then((cardCount) => {
+      cy.get(".cardContainer").should("have.length", cardCount + 1);
+    });
+  });
+
+  it("Write text to a card", () => {
+    cy.get("[data-cy=backlog]").within(() => {
+      //using blur because only then it send a call to the API with new content
+      cy.get("input").last().type("Hello, World").focus().blur();
+    });
+  });
+
+  it("Delete card", () => {
+    cy.get(".cardContainer").its("length").as("cardCount");
+
+    cy.get("[data-cy=backlog]").within(() => {
+      // need to use force because button is not visible
+      cy.get('button[aria-label="delete-card"]').last().click({ force: true });
+    });
+
+    cy.get("@cardCount").then((cardCount) => {
+      cy.get(".cardContainer").should("have.length", cardCount - 1);
+    });
+  });
 });
