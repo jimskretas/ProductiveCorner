@@ -12,6 +12,7 @@
     "jwt-decode": "2.2.0",
     "react": "latest",
     "react-beautiful-dnd": "13.0.0",
+    "react-countdown": "^2.2.1",
     "react-dom": "latest",
     "react-router-dom": "5.1.2"
   },

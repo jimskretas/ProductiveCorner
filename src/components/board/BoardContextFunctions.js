@@ -13,23 +13,27 @@ export function deleteCardFunction(board, cardId) {
 
   let newState = {
     cards: {
-      cards
+      cards,
     },
     columns: {
-      columns
+      columns,
     },
-    ...board
+    ...board,
   };
 
   return newState;
 }
 
-export function addCardFunction(board, colId) {
+export function addCardFunction(board, colId, category = "text") {
   let newCardNumber = board.cardNumber + 1;
   const id = "card" + newCardNumber;
   // Add a new card
   let newCards = board.cards;
-  newCards[id] = { id: id, content: "" };
+  console.log(category);
+  if (category === "text")
+    newCards[id] = { id: id, content: "", category: category };
+  else if (category === "pomodoro")
+    newCards[id] = { id: id, content: 25, category: category };
 
   // Add the cardId at the end of cardIds in the props.colId column
   let newColumns = board.columns;
@@ -38,7 +42,7 @@ export function addCardFunction(board, colId) {
     ...board,
     cards: newCards,
     columns: newColumns,
-    cardNumber: newCardNumber
+    cardNumber: newCardNumber,
   };
 
   return newState;
@@ -74,9 +78,9 @@ export function moveCardFunction(board, result) {
         ...board.columns,
         [startColumn.id]: {
           ...startColumn,
-          cardIds: newCardIds
-        }
-      }
+          cardIds: newCardIds,
+        },
+      },
     };
 
     return newState;
@@ -95,13 +99,13 @@ export function moveCardFunction(board, result) {
       ...board.columns,
       [startColumn.id]: {
         ...startColumn,
-        cardIds: startCardIds
+        cardIds: startCardIds,
       },
       [destColumn.id]: {
         ...destColumn,
-        cardIds: finishCardIds
-      }
-    }
+        cardIds: finishCardIds,
+      },
+    },
   };
 
   return newState;
@@ -115,7 +119,7 @@ export function updateCardFunction(board, currContent, id) {
     newCards[id] = { ...newCards[id], content: currContent };
     let newState = {
       ...board,
-      cards: newCards
+      cards: newCards,
     };
 
     return newState;

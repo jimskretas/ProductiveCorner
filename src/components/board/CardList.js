@@ -14,6 +14,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 
 import { BoardContext } from "./BoardContext";
 import TextCard from "./TextCard";
+import PomodoroCard from "./PomodoroCard";
 
 const useStyles = makeStyles((theme) => ({
   column: {
@@ -60,9 +61,15 @@ export default function CardList(props) {
         <Droppable droppableId={column.id}>
           {(provided) => (
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
-              {cards.map((card, index) => (
-                <TextCard key={card.id} card={card} index={index} />
-              ))}
+              {cards.map((card, index) => {
+                {
+                  card.category === "text" ? (
+                    <TextCard key={card.id} card={card} index={index} />
+                  ) : (
+                    <PomodoroCard key={card.id} card={card} index={index} />
+                  );
+                }
+              })}
               {provided.placeholder}
             </CardContent>
           )}
@@ -72,20 +79,32 @@ export default function CardList(props) {
             <IconButton
               className={classes.addButton}
               onClick={() =>
-                dispatch({ type: "ADD_CARD", columnId: column.id })
+                dispatch({
+                  type: "ADD_CARD",
+                  columnId: column.id,
+                  category: "text",
+                })
               }
               variant="contained"
             >
               <NoteAddIcon />
             </IconButton>
           </Tooltip>
-          <IconButton
-            className={classes.addButton}
-            variant="contained"
-            disabled
-          >
-            <TimerIcon /> {/* Check react-component-countdown-timer */}
-          </IconButton>
+          <Tooltip title="Add a pomodoro card">
+            <IconButton
+              className={classes.addButton}
+              onClick={() =>
+                dispatch({
+                  type: "ADD_CARD",
+                  columnId: column.id,
+                  category: "pomodoro",
+                })
+              }
+              variant="contained"
+            >
+              <TimerIcon />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Card>
     </Grid>

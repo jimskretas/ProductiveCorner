@@ -3,7 +3,7 @@ import {
   deleteCardFunction,
   updateCardFunction,
   addCardFunction,
-  moveCardFunction
+  moveCardFunction,
 } from "./BoardContextFunctions";
 import { getBoard, updateBoard } from "../../apiUtils/boardActions";
 import { useIsFirstRender } from "../../apiUtils/useIsFirstRender";
@@ -12,32 +12,32 @@ export const BoardContext = createContext();
 
 const initialState = {
   cards: {
-    card0: { id: "card0", content: "" }
+    card0: { id: "card0", content: "" },
   },
   columns: {
     backlog: {
       id: "backlog",
       title: "Backlog",
-      cardIds: []
+      cardIds: [],
     },
     todo: {
       id: "todo",
       title: "To do",
-      cardIds: []
+      cardIds: [],
     },
     doing: {
       id: "doing",
       title: "Doing",
-      cardIds: []
+      cardIds: [],
     },
     done: {
       id: "done",
       title: "Done",
-      cardIds: []
-    }
+      cardIds: [],
+    },
   },
   columnOrder: ["backlog", "todo", "doing", "done"],
-  cardNumber: 0
+  cardNumber: 0,
 };
 
 const reducer = (board, action) => {
@@ -47,7 +47,7 @@ const reducer = (board, action) => {
     case "UPDATE_CARD":
       return updateCardFunction(board, action.content, action.cardId);
     case "ADD_CARD":
-      return addCardFunction(board, action.columnId);
+      return addCardFunction(board, action.columnId, action.category);
     case "MOVE_CARD":
       return moveCardFunction(board, action.result);
     case "UPDATE_BOARD":
@@ -57,7 +57,7 @@ const reducer = (board, action) => {
   }
 };
 
-export const BoardProvider = props => {
+export const BoardProvider = (props) => {
   const [board, dispatch] = useReducer(reducer, initialState);
   const isFirstRender = useIsFirstRender();
 
