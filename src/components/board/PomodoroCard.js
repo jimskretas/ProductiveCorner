@@ -28,7 +28,7 @@ export default function TextCard(props) {
   }
 
   function handleStartPause() {
-    start = !start;
+    setStart(!start);
   }
 
   return (
