@@ -62,10 +62,10 @@ export default function CardList(props) {
           {(provided) => (
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
               {cards.map((card, index) => {
-                {
-                  card.category === "text" ? (
-                    <TextCard key={card.id} card={card} index={index} />
-                  ) : (
+                if (card.category === "text") {
+                  return <TextCard key={card.id} card={card} index={index} />;
+                } else {
+                  return (
                     <PomodoroCard key={card.id} card={card} index={index} />
                   );
                 }
