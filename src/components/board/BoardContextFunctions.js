@@ -33,7 +33,7 @@ export function addCardFunction(board, colId, category = "text") {
   if (category === "text")
     newCards[id] = { id: id, content: "", category: category };
   else if (category === "pomodoro")
-    newCards[id] = { id: id, content: 25, category: category };
+    newCards[id] = { id: id, content: 25 * 60, category: category };
 
   // Add the cardId at the end of cardIds in the props.colId column
   let newColumns = board.columns;

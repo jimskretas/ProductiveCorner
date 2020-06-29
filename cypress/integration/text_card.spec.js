@@ -1,4 +1,4 @@
-describe("Testing basic board features", () => {
+describe("Testing text cards", () => {
   before(() => {
     cy.login();
     cy.saveLocalStorage();
@@ -9,7 +9,7 @@ describe("Testing basic board features", () => {
     cy.restoreLocalStorage();
   });
 
-  it("Create new card", () => {
+  it("Create new text card", () => {
     // alias so i can use the cardCount later
     cy.get(".cardContainer").its("length").as("cardCount");
 
@@ -29,7 +29,7 @@ describe("Testing basic board features", () => {
     });
   });
 
-  it("Delete card", () => {
+  it("Delete text card", () => {
     cy.get(".cardContainer").its("length").as("cardCount");
 
     cy.get("[data-cy=backlog]").within(() => {
