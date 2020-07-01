@@ -22,15 +22,42 @@ describe("Testing text cards", () => {
     });
   });
 
-  // Start the countdown
-  // check if going more than 60 => 60
-  // check if going less than 1 => 1
-  // check if input is not a number
-  // test the stop button
-  it("Start the countdown", () => {
+  it("New pomodoro cards should have value 25", () => {
     cy.get("[data-cy=backlog]").within(() => {
-      //using blur because only then it send a call to the API with new content
-      cy.get("input").last().type("Hello, World").focus().blur();
+      cy.get("input").last().should("have.value", "25");
+    });
+  });
+
+  it("Pomodoro cards should allow values between 1-60", () => {
+    cy.get("[data-cy=backlog]").within(() => {
+      cy.get("input").last().type("{selectall}").type(60);
+      cy.get("input").last().should("have.value", "60");
+      cy.get("input").last().type("{selectall}").type(61);
+      cy.get("input").last().should("have.value", "60");
+      cy.get("input").last().type("{selectall}").type(1);
+      cy.get("input").last().should("have.value", "1");
+      cy.get("input").last().type("{selectall}").type(-1);
+      cy.get("input").last().should("have.value", "1");
+      cy.get("input").last().type("{selectall}").type(30);
+      cy.get("input").last().should("have.value", "30");
+    });
+  });
+
+  it("Testing start/stop button", () => {
+    cy.get("[data-cy=backlog]").within(() => {
+      cy.get("button[aria-label='start-stop']").last().click();
+      cy.get(".cardContainer")
+        .last()
+        .within(() => {
+          cy.get("input").should("not.exist");
+        });
+
+      cy.get("button[aria-label='start-stop']").last().click();
+      cy.get(".cardContainer")
+        .last()
+        .within(() => {
+          cy.get("input").should("exist");
+        });
     });
   });
 

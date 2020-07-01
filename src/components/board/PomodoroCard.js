@@ -51,11 +51,11 @@ export default function TextCard(props) {
             <Grid item xs={6}>
               {stopped ? (
                 <TextField
-                  value={Math.floor(content / 60)}
+                  value={Math.floor(parseInt(content, 10) / 60)}
                   onChange={(e) => {
                     if (isNaN(e.target.value)) setContent(25 * 60);
                     else if (e.target.value > 60) setContent(60 * 60);
-                    else if (e.target.value < 1) setContent(1 * 60 + 1);
+                    else if (e.target.value < 1) setContent(1 * 60);
                     else setContent(e.target.value * 60);
                   }}
                   onKeyDown={(e) => handleKeyPress(e)}
