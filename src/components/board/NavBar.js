@@ -28,9 +28,6 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Productive Corner
           </Typography>
-          <IconButton color="inherit" disabled>
-            <InfoIcon />
-          </IconButton>
           <Tooltip title="Logout">
             <IconButton
               onClick={logout}
