@@ -11,21 +11,15 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import InfoIcon from "@material-ui/icons/Info";
 
 import { logout } from "../../apiUtils/authActions";
-// import InfoModal from "./InfoModal";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export default function ButtonAppBar() {
-  // const [open, setOpen] = useState(false) //for info modal;
   const classes = useStyles();
-
-  // const handleModal = () => {
-  //   setOpen(!open); // for info modal
-  // };
 
   return (
     <div className={classes.root}>
@@ -37,7 +31,6 @@ export default function ButtonAppBar() {
           <IconButton color="inherit" disabled>
             <InfoIcon />
           </IconButton>
-          {/* <InfoModal open={open} handleModal={handleModal} /> */}
           <Tooltip title="Logout">
             <IconButton
               onClick={logout}
