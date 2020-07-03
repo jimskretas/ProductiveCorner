@@ -1,3 +1,5 @@
+import cardLimits from "./globalVars";
+
 export function deleteCardFunction(board, cardId) {
   let cards = board.cards;
   delete cards[cardId];
@@ -25,6 +27,9 @@ export function deleteCardFunction(board, cardId) {
 }
 
 export function addCardFunction(board, colId, category = "text") {
+  // check if there is space for a new card
+  if (board.columns[colId].cardIds.length === cardLimits[colId]) return board;
+
   let newCardNumber = board.cardNumber + 1;
   const id = "card" + newCardNumber;
   // Add a new card
@@ -52,9 +57,14 @@ export function moveCardFunction(board, result) {
   // console.log(result);
   const { destination, source, draggableId } = result;
 
-  if (!destination) {
+  // check if there is space for a new card
+  if (
+    board.columns[destination.droppableId].cardIds.length ===
+    cardLimits[destination.droppableId]
+  )
     return board;
-  }
+
+  if (!destination) return board;
 
   if (
     destination.droppableId === source.droppableId &&

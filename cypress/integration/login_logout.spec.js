@@ -1,6 +1,8 @@
+import url from "../settings";
+
 describe("Testing LogIn-LogOut", () => {
   it("Redirecting non logged in user to login page", () => {
-    cy.visit("https://productive-corner.netlify.app");
+    cy.visit(url);
     cy.url().should("include", "/login");
   });
 
@@ -11,7 +13,7 @@ describe("Testing LogIn-LogOut", () => {
       cy.get('button[type="submit"]').click();
     });
 
-    cy.url().should("eq", "https://productive-corner.netlify.app/");
+    cy.url().should("eq", url + "/");
   });
 
   it("Logging out", () => {

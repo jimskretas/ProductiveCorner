@@ -1,8 +1,10 @@
+import url from "../settings";
+
 describe("Testing text cards", () => {
   before(() => {
     cy.login();
     cy.saveLocalStorage();
-    cy.visit("https://productive-corner.netlify.app");
+    cy.visit(url);
   });
 
   beforeEach(() => {

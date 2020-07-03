@@ -13,6 +13,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import TimerIcon from "@material-ui/icons/Timer";
 
 import { BoardContext } from "./BoardContext";
+import cardLimits from "./globalVars";
 import TextCard from "./TextCard";
 import PomodoroCard from "./PomodoroCard";
 
@@ -48,12 +49,17 @@ export default function CardList(props) {
   const classes = useStyles();
   const [board, dispatch] = useContext(BoardContext);
 
+  const cardCount = column.cardIds.length;
+  const cardLimit = cardLimits[column.id];
+  const cardCountText =
+    cardCount > 0 ? "(" + cardCount + "/" + cardLimit + ")" : "";
+
   return (
     <Grid item>
       <Card data-cy={column.id} className={classes.column}>
         <CardHeader
           disableTypography
-          title={column.title}
+          title={column.title + cardCountText}
           className={classes.columnTitle}
         >
           <h2>{column.title}</h2>

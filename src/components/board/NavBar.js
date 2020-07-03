@@ -8,7 +8,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import InfoIcon from "@material-ui/icons/Info";
 
 import { logout } from "../../apiUtils/authActions";
 
