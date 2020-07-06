@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import Countdown, { zeroPad } from "react-countdown";
 
@@ -11,12 +11,10 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import StopIcon from "@material-ui/icons/Stop";
 import TextField from "@material-ui/core/TextField";
 
-import { BoardContext } from "./BoardContext";
-import "./TextCard.css";
+import "./Card.css";
 
 export default function TextCard(props) {
-  const { card, index } = props;
-  const [board, dispatch] = useContext(BoardContext);
+  const { card, index, dispatch } = props;
   const [content, setContent] = useState(card.content);
   const [stopped, setStopped] = useState(true);
 

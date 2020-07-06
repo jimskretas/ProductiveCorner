@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { BoardContext } from "./BoardContext";
 import CardList from "./CardList";
 
-export default function Board() {
-  const [board, dispatch] = useContext(BoardContext);
-  // console.log(board);
+export default function Board(props) {
+  const { board, dispatch } = props;
 
   return (
     <div style={{ display: "flex", overflowx: "auto" }}>
@@ -17,7 +15,14 @@ export default function Board() {
           const column = board.columns[columnId];
           const cards = column.cardIds.map((cardId) => board.cards[cardId]);
 
-          return <CardList key={column.id} column={column} cards={cards} />;
+          return (
+            <CardList
+              key={column.id}
+              column={column}
+              cards={cards}
+              dispatch={dispatch}
+            />
+          );
         })}
       </DragDropContext>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import Card from "@material-ui/core/Card";
@@ -8,13 +8,11 @@ import InputBase from "@material-ui/core/InputBase";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 
-import { BoardContext } from "./BoardContext";
-import "./TextCard.css";
+import "./Card.css";
 
 export default function TextCard(props) {
-  const { card, index } = props;
+  const { card, index, dispatch } = props;
   const [content, setContent] = useState(card.content);
-  const [board, dispatch] = useContext(BoardContext);
 
   function handleKeyPress(e) {
     if (e.keyCode === 13) {
@@ -24,7 +22,7 @@ export default function TextCard(props) {
 
   return (
     <Draggable draggableId={card.id} index={index}>
-      {provided => (
+      {(provided) => (
         <Card
           className="cardContainer"
           ref={provided.innerRef}
@@ -42,13 +40,13 @@ export default function TextCard(props) {
             </Grid>
             <Grid item xs={8}>
               <InputBase
-                onChange={e => setContent(e.target.value)}
-                onKeyDown={e => handleKeyPress(e)}
+                onChange={(e) => setContent(e.target.value)}
+                onKeyDown={(e) => handleKeyPress(e)}
                 onBlur={() =>
                   dispatch({
                     type: "UPDATE_CARD",
                     cardId: card.id,
-                    content: content
+                    content: content,
                   })
                 }
                 fullWidth

@@ -1,0 +1,13 @@
+/* Display trash button on card hover */
+.cardContainer {
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+.trashButton {
+  display: none;
+}
+
+.cardContainer:hover .trashButton {
+  display: inline;
+}

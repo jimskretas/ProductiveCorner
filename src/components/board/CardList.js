@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 
 import Card from "@material-ui/core/Card";
@@ -12,7 +12,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tooltip from "@material-ui/core/Tooltip";
 import TimerIcon from "@material-ui/icons/Timer";
 
-import { BoardContext } from "./BoardContext";
 import cardLimits from "./globalVars";
 import TextCard from "./TextCard";
 import PomodoroCard from "./PomodoroCard";
@@ -45,9 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardList(props) {
-  const { column, cards } = props;
+  const { column, cards, dispatch } = props;
   const classes = useStyles();
-  const [board, dispatch] = useContext(BoardContext);
 
   const cardCount = column.cardIds.length;
   const cardLimit = cardLimits[column.id];
@@ -69,10 +67,22 @@ export default function CardList(props) {
             <CardContent ref={provided.innerRef} {...provided.droppableProps}>
               {cards.map((card, index) => {
                 if (card.category === "text") {
-                  return <TextCard key={card.id} card={card} index={index} />;
+                  return (
+                    <TextCard
+                      key={card.id}
+                      card={card}
+                      index={index}
+                      dispatch={dispatch}
+                    />
+                  );
                 } else {
                   return (
-                    <PomodoroCard key={card.id} card={card} index={index} />
+                    <PomodoroCard
+                      key={card.id}
+                      card={card}
+                      index={index}
+                      dispatch={dispatch}
+                    />
                   );
                 }
               })}
