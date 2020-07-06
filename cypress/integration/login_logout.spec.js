@@ -13,7 +13,7 @@ describe("Testing LogIn-LogOut", () => {
       cy.get('button[type="submit"]').click();
     });
 
-    cy.url().should("eq", url + "/");
+    cy.url().should("eq", url);
   });
 
   it("Logging out", () => {

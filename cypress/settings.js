@@ -1,4 +1,4 @@
-// const url = "https://productive-corner.netlify.app";
+// const url = "https://productive-corner.netlify.app/";
 
 const url = "http://localhost:3000/";
 
