@@ -12,16 +12,19 @@ describe("Testing CardLists's card count limits", () => {
   });
 
   it("Should not be able to exceed the card limit", () => {
+    // making sure there is at least 1 card to count
+    cy.get("body").then(($body) => {
+      if ($body.find(".cardContainer").length === 0)
+        cy.get('button[title="Add a pomodoro card"]').first().click();
+    });
     // alias so i can use the cardCount later
     cy.get(".cardContainer").its("length").as("cardCount");
 
-    // for (let i = 0; i < 3; i++) {
     cy.get("[data-cy=doing]").within(() => {
       cy.get('button[title="Add a pomodoro card"]').click();
       cy.get('button[title="Add a text card"]').click();
       cy.get('button[title="Add a pomodoro card"]').click();
     });
-    // }
 
     cy.get("@cardCount").then((cardCount) => {
       // only 2 cards should be created, doing list has a limit of 2 cards

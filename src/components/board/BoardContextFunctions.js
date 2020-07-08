@@ -34,7 +34,7 @@ export function addCardFunction(board, colId, category = "text") {
   const id = "card" + newCardNumber;
   // Add a new card
   let newCards = board.cards;
-  console.log(category);
+  // console.log(category);
   if (category === "text")
     newCards[id] = { id: id, content: "", category: category };
   else if (category === "pomodoro")
@@ -137,4 +137,15 @@ export function updateCardFunction(board, currContent, id) {
 
   //if content hasn't changed
   return board;
+}
+
+export function deleteAllCardsFunction(board, colId) {
+  let cardsToDelete = [...board.columns[colId].cardIds];
+  let newBoard = JSON.parse(JSON.stringify(board)); //deep copy
+
+  cardsToDelete.forEach((cardId) => {
+    deleteCardFunction(newBoard, cardId);
+  });
+
+  return newBoard;
 }

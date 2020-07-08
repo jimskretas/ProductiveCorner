@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import {
   deleteCardFunction,
+  deleteAllCardsFunction,
   updateCardFunction,
   addCardFunction,
   moveCardFunction,
@@ -44,6 +45,8 @@ const reducer = (board, action) => {
   switch (action.type) {
     case "DELETE_CARD":
       return deleteCardFunction(board, action.cardId);
+    case "DELETE_ALL_CARDS":
+      return deleteAllCardsFunction(board, action.columnId);
     case "UPDATE_CARD":
       return updateCardFunction(board, action.content, action.cardId);
     case "ADD_CARD":

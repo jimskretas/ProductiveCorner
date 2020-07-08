@@ -12,11 +12,16 @@ describe("Testing text cards", () => {
   });
 
   it("Create new text card", () => {
+    // making sure there is at least 1 card to count
+    cy.get("body").then(($body) => {
+      if ($body.find(".cardContainer").length === 0)
+        cy.get('button[data-cy="add-text-card"]').first().click();
+    });
     // alias so i can use the cardCount later
     cy.get(".cardContainer").its("length").as("cardCount");
 
     cy.get("[data-cy=backlog]").within(() => {
-      cy.get('button[title="Add a text card"]').click();
+      cy.get('button[data-cy="add-text-card"]').click();
     });
 
     cy.get("@cardCount").then((cardCount) => {
@@ -27,7 +32,11 @@ describe("Testing text cards", () => {
   it("Write text to a card", () => {
     cy.get("[data-cy=backlog]").within(() => {
       //using blur because only then it send a call to the API with new content
-      cy.get("input").last().type("Hello, World").focus().blur();
+      cy.get("input")
+        .last()
+        .type("Hello, World", { force: true })
+        .focus()
+        .blur();
     });
   });
 

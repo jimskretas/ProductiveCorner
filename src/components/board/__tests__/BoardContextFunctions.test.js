@@ -1,5 +1,6 @@
 import {
   deleteCardFunction,
+  deleteAllCardsFunction,
   updateCardFunction,
   addCardFunction,
   moveCardFunction,
@@ -75,6 +76,41 @@ it("Should be able to delete a card", function () {
     cardNumber: 4,
   };
   expect(deleteCardFunction(state, cardId)).toEqual(targetState);
+});
+
+it("Should be able to delete all cards in todo list", function () {
+  let colId = "todo";
+  let targetState = {
+    cards: {
+      card3: { id: "card3", content: "Charge phone" },
+      card4: { id: "card4", content: "Cook dinner" },
+    },
+    columns: {
+      backlog: {
+        id: "backlog",
+        title: "Backlog",
+        cardIds: [],
+      },
+      todo: {
+        id: "todo",
+        title: "To do",
+        cardIds: [],
+      },
+      doing: {
+        id: "doing",
+        title: "Doing",
+        cardIds: ["card3"],
+      },
+      done: {
+        id: "done",
+        title: "Done",
+        cardIds: ["card4"],
+      },
+    },
+    columnOrder: ["backlog", "todo", "doing", "done"],
+    cardNumber: 4,
+  };
+  expect(deleteAllCardsFunction(state, colId)).toEqual(targetState);
 });
 
 it("Should not be able to add more than 2 cards in doing", function () {
