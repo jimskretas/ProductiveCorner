@@ -1,5 +1,3 @@
-import cardLimits from "./globalVars";
-
 export function deleteCardFunction(board, cardId) {
   let cards = board.cards;
   delete cards[cardId];
@@ -26,19 +24,27 @@ export function deleteCardFunction(board, cardId) {
   return newState;
 }
 
-export function addCardFunction(board, colId, category = "text") {
+export function addCardFunction(
+  board,
+  colId,
+  category = "text",
+  limit,
+  initialLength = 25
+) {
   // check if there is space for a new card
-  if (board.columns[colId].cardIds.length === cardLimits[colId]) return board;
+  if (board.columns[colId].cardIds.length === limit) return board;
+  if (typeof initialLength === "undefined") initialLength = 25;
 
   let newCardNumber = board.cardNumber + 1;
   const id = "card" + newCardNumber;
+
   // Add a new card
   let newCards = board.cards;
-  // console.log(category);
+
   if (category === "text")
     newCards[id] = { id: id, content: "", category: category };
   else if (category === "pomodoro")
-    newCards[id] = { id: id, content: 25 * 60, category: category };
+    newCards[id] = { id: id, content: initialLength * 60, category: category };
 
   // Add the cardId at the end of cardIds in the props.colId column
   let newColumns = board.columns;
@@ -53,14 +59,14 @@ export function addCardFunction(board, colId, category = "text") {
   return newState;
 }
 
-export function moveCardFunction(board, result) {
+export function moveCardFunction(board, result, listLimits) {
   // console.log(result);
   const { destination, source, draggableId } = result;
 
   // check if there is space for a new card
   if (
     board.columns[destination.droppableId].cardIds.length ===
-    cardLimits[destination.droppableId]
+    listLimits[destination.droppableId]
   )
     return board;
 

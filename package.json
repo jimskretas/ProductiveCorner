@@ -8,6 +8,7 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "0.19.2",
     "jwt-decode": "2.2.0",
     "react": "latest",

@@ -19,7 +19,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
 import TimerIcon from "@material-ui/icons/Timer";
 
-import cardLimits from "./globalVars";
 import TextCard from "./TextCard";
 import PomodoroCard from "./PomodoroCard";
 
@@ -51,12 +50,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CardList(props) {
-  const { column, cards, dispatch } = props;
+  const { column, cards, limit, sessionLength, dispatch } = props;
   const [open, setOpen] = useState(false); // for delete all cards dialog
   const classes = useStyles();
 
   const cardCount = column.cardIds.length;
-  const cardLimit = cardLimits[column.id];
+  const cardLimit = limit;
   const cardCountText =
     cardCount > 0 ? "(" + cardCount + "/" + cardLimit + ")" : "";
 
@@ -118,6 +117,7 @@ export default function CardList(props) {
                       key={card.id}
                       card={card}
                       index={index}
+                      sessionLength={sessionLength}
                       dispatch={dispatch}
                     />
                   );
@@ -137,6 +137,7 @@ export default function CardList(props) {
                   type: "ADD_CARD",
                   columnId: column.id,
                   category: "text",
+                  limit: limit,
                 })
               }
               variant="contained"
@@ -153,6 +154,8 @@ export default function CardList(props) {
                   type: "ADD_CARD",
                   columnId: column.id,
                   category: "pomodoro",
+                  limit: limit,
+                  initialLength: sessionLength["work"],
                 })
               }
               variant="contained"

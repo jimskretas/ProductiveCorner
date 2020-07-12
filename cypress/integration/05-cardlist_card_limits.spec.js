@@ -12,11 +12,6 @@ describe("Testing CardLists's card count limits", () => {
   });
 
   it("Should not be able to exceed the card limit", () => {
-    // making sure there is at least 1 card to count
-    cy.get("body").then(($body) => {
-      if ($body.find(".cardContainer").length === 0)
-        cy.get('button[title="Add a pomodoro card"]').first().click();
-    });
     // alias so i can use the cardCount later
     cy.get(".cardContainer").its("length").as("cardCount");
 
@@ -34,10 +29,10 @@ describe("Testing CardLists's card count limits", () => {
 
     //delete the cards that just created
     cy.get("[data-cy=doing]").within(() => {
-      // need to use force because button is not visible
-      cy.get('button[aria-label="delete-card"]').last().click({ force: true });
-      cy.get('button[aria-label="delete-card"]').last().click({ force: true });
+      cy.get('button[data-cy="delete-all-cards"]').click();
     });
+
+    cy.get('button[data-cy="delete-all-cards-confirm"]').click();
 
     cy.get("@cardCount").then((cardCount) => {
       cy.get(".cardContainer").should("have.length", cardCount);

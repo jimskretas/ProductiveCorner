@@ -113,8 +113,8 @@ it("Should be able to delete all cards in todo list", function () {
   expect(deleteAllCardsFunction(state, colId)).toEqual(targetState);
 });
 
-it("Should not be able to add more than 2 cards in doing", function () {
-  let columnId = "todo";
+it("Should be able to add a card", function () {
+  let columnId = "doing";
   let targetState = {
     cards: {
       card1: { id: "card1", content: "Take out the garbage" },
@@ -132,12 +132,12 @@ it("Should not be able to add more than 2 cards in doing", function () {
       todo: {
         id: "todo",
         title: "To do",
-        cardIds: ["card1", "card2", "card5"],
+        cardIds: ["card1", "card2"],
       },
       doing: {
         id: "doing",
         title: "Doing",
-        cardIds: ["card3"],
+        cardIds: ["card3", "card5"],
       },
       done: {
         id: "done",
@@ -148,16 +148,16 @@ it("Should not be able to add more than 2 cards in doing", function () {
     columnOrder: ["backlog", "todo", "doing", "done"],
     cardNumber: 5,
   };
-  expect(addCardFunction(state, columnId)).toEqual(targetState);
+  expect(addCardFunction(state, columnId, "text", 2)).toEqual(targetState);
 });
 
-it("Should be able to add a card", function () {
+it("Should not be able to add more than 2 cards in doing", function () {
   let columnId = "doing";
-  let boardWithTwoCardsInDoing = addCardFunction(state, columnId);
+  let boardWithTwoCardsInDoing = addCardFunction(state, columnId, "text", 2);
   // Function should return the original board, because doing can hold 2 cards only.
-  expect(addCardFunction(boardWithTwoCardsInDoing, columnId)).toEqual(
-    boardWithTwoCardsInDoing
-  );
+  expect(
+    addCardFunction(boardWithTwoCardsInDoing, columnId, "text", 2)
+  ).toEqual(boardWithTwoCardsInDoing);
 });
 
 it("Should be able to update state with new card's content", function () {
@@ -206,6 +206,7 @@ it("Should not change state, content hasn't changed", function () {
 });
 
 it("Should move card in the same list", function () {
+  let listLimits = { backlog: 10, todo: 5, doing: 2, done: 10 };
   let targetState = {
     cards: {
       card1: { id: "card1", content: "Take out the garbage" },
@@ -253,10 +254,11 @@ it("Should move card in the same list", function () {
     },
     combine: null,
   };
-  expect(moveCardFunction(state, result)).toEqual(targetState);
+  expect(moveCardFunction(state, result, listLimits)).toEqual(targetState);
 });
 
 it("Should move card in different list", function () {
+  let listLimits = { backlog: 10, todo: 5, doing: 2, done: 10 };
   let targetState = {
     cards: {
       card1: { id: "card1", content: "Take out the garbage" },
@@ -304,5 +306,5 @@ it("Should move card in different list", function () {
     },
     combine: null,
   };
-  expect(moveCardFunction(state, result)).toEqual(targetState);
+  expect(moveCardFunction(state, result, listLimits)).toEqual(targetState);
 });

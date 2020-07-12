@@ -5,18 +5,31 @@ import Countdown, { zeroPad } from "react-countdown";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
+import Snackbar from "@material-ui/core/Snackbar";
+import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import StopIcon from "@material-ui/icons/Stop";
-import TextField from "@material-ui/core/TextField";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import "./Card.css";
 
-export default function TextCard(props) {
-  const { card, index, dispatch } = props;
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+export default function PomodoroCard(props) {
+  const {
+    card,
+    index,
+    sessionLength: { work: workLength, break: breakLength },
+    dispatch,
+  } = props;
   const [content, setContent] = useState(card.content);
   const [stopped, setStopped] = useState(true);
+  const [sessionType, setSessionType] = useState("work");
+  const [open, setOpen] = useState(false);
 
   function handleKeyPress(e) {
     if (e.keyCode === 13) {
@@ -24,92 +37,128 @@ export default function TextCard(props) {
     }
   }
 
+  function handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  }
+
   function handleStartStop() {
+    // if user press stop, card resets
+    if (stopped === false) {
+      setSessionType("work");
+      setContent(workLength * 60);
+    }
     setStopped(!stopped);
   }
 
   return (
-    <Draggable draggableId={card.id} index={index}>
-      {(provided) => (
-        <Card
-          className="cardContainer"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-        >
-          <Grid container spacing={0} alignItems="center">
-            <Grid item xs={2}>
-              <IconButton
-                {...provided.dragHandleProps}
-                aria-label="handle"
-                style={{ backgroundColor: "transparent" }}
-              >
-                <DragIndicatorIcon fontSize="small" />
-              </IconButton>
-            </Grid>
-            <Grid item xs={6}>
-              {stopped ? (
-                <TextField
-                  value={Math.floor(parseInt(content, 10) / 60)}
-                  onChange={(e) => {
-                    if (isNaN(e.target.value)) setContent(25 * 60);
-                    else if (e.target.value > 60) setContent(60 * 60);
-                    else if (e.target.value < 1) setContent(1 * 60);
-                    else setContent(e.target.value * 60);
-                  }}
-                  onKeyDown={(e) => handleKeyPress(e)}
-                  onBlur={() =>
-                    dispatch({
-                      type: "UPDATE_CARD",
-                      cardId: card.id,
-                      content: content,
-                    })
-                  }
-                  type="number"
-                />
-              ) : (
-                <Countdown
-                  date={Date.now() + parseInt(content, 10) * 1000}
-                  zeroPadTime={2}
-                  renderer={({ minutes, seconds }) => {
-                    setContent(
-                      parseInt(minutes, 10) * 60 + parseInt(seconds, 10)
-                    );
-                    return (
-                      <span>
-                        {zeroPad(minutes)}:{zeroPad(seconds)}
-                      </span>
-                    );
-                  }}
-                />
-              )}
-            </Grid>
-            <Grid item xs={2}>
-              <IconButton
-                aria-label="start-stop"
-                style={{ backgroundColor: "transparent" }}
-                onClick={() => handleStartStop()}
-              >
+    <div>
+      <Draggable draggableId={card.id} index={index}>
+        {(provided) => (
+          <Card
+            className="cardContainer"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+          >
+            <Grid container spacing={0} alignItems="center">
+              <Grid item xs={2}>
+                <IconButton
+                  {...provided.dragHandleProps}
+                  aria-label="handle"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <DragIndicatorIcon fontSize="small" />
+                </IconButton>
+              </Grid>
+              <Grid item xs={6}>
                 {stopped ? (
-                  <PlayArrowIcon fontSize="small" />
+                  <TextField
+                    value={Math.floor(parseInt(content, 10) / 60)}
+                    onChange={(e) => {
+                      if (isNaN(e.target.value))
+                        setContent(
+                          sessionType === "work"
+                            ? workLength * 60
+                            : breakLength * 60
+                        );
+                      else if (e.target.value > 60) setContent(60 * 60);
+                      else if (e.target.value < 1) setContent(1 * 60);
+                      else setContent(e.target.value * 60);
+                    }}
+                    onKeyDown={(e) => handleKeyPress(e)}
+                    onBlur={() =>
+                      dispatch({
+                        type: "UPDATE_CARD",
+                        cardId: card.id,
+                        content: content,
+                      })
+                    }
+                    type="number"
+                  />
                 ) : (
-                  <StopIcon fontSize="small" />
+                  <Countdown
+                    date={Date.now() + parseInt(content, 10) * 1000}
+                    zeroPadTime={2}
+                    renderer={({ minutes, seconds, completed }) => {
+                      if (completed) {
+                        setOpen(true);
+                        if (sessionType === "work") {
+                          setSessionType("break");
+                          setContent(breakLength * 60);
+                        } else {
+                          setSessionType("work");
+                          setContent(workLength * 60);
+                        }
+                        setStopped(true);
+                      }
+                      setContent(
+                        parseInt(minutes, 10) * 60 + parseInt(seconds, 10)
+                      );
+                      return (
+                        <span>
+                          {zeroPad(minutes)}:{zeroPad(seconds)}
+                        </span>
+                      );
+                    }}
+                  />
                 )}
-              </IconButton>
+              </Grid>
+              <Grid item xs={2}>
+                <IconButton
+                  aria-label="start-stop"
+                  style={{ backgroundColor: "transparent" }}
+                  onClick={() => handleStartStop()}
+                >
+                  {stopped ? (
+                    <PlayArrowIcon fontSize="small" />
+                  ) : (
+                    <StopIcon fontSize="small" />
+                  )}
+                </IconButton>
+              </Grid>
+              <Grid item xs={2} className="trashButton">
+                <IconButton
+                  aria-label="delete-card"
+                  onClick={() =>
+                    dispatch({ type: "DELETE_CARD", cardId: card.id })
+                  }
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Grid>
             </Grid>
-            <Grid item xs={2} className="trashButton">
-              <IconButton
-                aria-label="delete-card"
-                onClick={() =>
-                  dispatch({ type: "DELETE_CARD", cardId: card.id })
-                }
-                style={{ backgroundColor: "transparent" }}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Card>
-      )}
-    </Draggable>
+          </Card>
+        )}
+      </Draggable>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="info">
+          {sessionType === "work" ? "Time for a break!" : "Break is over!"}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }

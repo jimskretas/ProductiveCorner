@@ -6,14 +6,14 @@ import BoardRoute from "./apiUtils/BoardRoute";
 import LoginRoute from "./apiUtils/LoginRoute";
 import LoginPage from "./components/auth/LoginPage";
 import RegisterPage from "./components/auth/RegisterPage";
-import AppPage from "./components/board/AppPage";
+import App from "./components/board/App";
 
 ReactDOM.render(
   <Router>
     <Switch>
       <LoginRoute path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
-      <BoardRoute exact path="/" component={AppPage} />
+      <BoardRoute exact path="/" component={App} />
     </Switch>
   </Router>,
   document.getElementById("app")

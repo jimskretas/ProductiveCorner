@@ -7,11 +7,13 @@ import {
   moveCardFunction,
 } from "./BoardContextFunctions";
 import { getBoard, updateBoard } from "../../apiUtils/boardActions";
+import { getSettings, updateSettings } from "../../apiUtils/settingsActions";
 import { useIsFirstRender } from "../../apiUtils/useIsFirstRender";
 
 import Board from "./Board";
+import NavBar from "./NavBar";
 
-const initialState = {
+const initialBoard = {
   cards: {
     card0: { id: "card0", content: "" },
   },
@@ -41,34 +43,87 @@ const initialState = {
   cardNumber: 0,
 };
 
-const reducer = (board, action) => {
+const initialSettings = {
+  listLimits: { backlog: 10, todo: 5, doing: 2, done: 10 },
+  sessionLength: { work: 25, break: 5 },
+};
+
+const initialState = {
+  board: initialBoard,
+  settings: initialSettings,
+};
+
+const reducer = (state, action) => {
+  // console.log(board);
+  // console.log(action);
   switch (action.type) {
     case "DELETE_CARD":
-      return deleteCardFunction(board, action.cardId);
+      return {
+        ...state,
+        board: deleteCardFunction(state["board"], action.cardId),
+      };
     case "DELETE_ALL_CARDS":
-      return deleteAllCardsFunction(board, action.columnId);
+      return {
+        ...state,
+        board: deleteAllCardsFunction(state["board"], action.columnId),
+      };
     case "UPDATE_CARD":
-      return updateCardFunction(board, action.content, action.cardId);
+      return {
+        ...state,
+        board: updateCardFunction(
+          state["board"],
+          action.content,
+          action.cardId
+        ),
+      };
     case "ADD_CARD":
-      return addCardFunction(board, action.columnId, action.category);
+      return {
+        ...state,
+        board: addCardFunction(
+          state["board"],
+          action.columnId,
+          action.category,
+          action.limit,
+          action.initialLength
+        ),
+      };
     case "MOVE_CARD":
-      return moveCardFunction(board, action.result);
+      return {
+        ...state,
+        board: moveCardFunction(state["board"], action.result, action.limits),
+      };
     case "UPDATE_BOARD":
-      return action.board;
+      return { ...state, board: action.board };
+    case "CHANGE_LIST_LIMITS":
+      return {
+        ...state,
+        settings: { ...state["settings"], listLimits: action.listLimits },
+      };
+    case "CHANGE_SESSION_LENGTH":
+      return {
+        ...state,
+        settings: { ...state["settings"], sessionLength: action.sessionLength },
+      };
+    case "UPDATE_SETTINGS": // to update the settings with info from api
+      return { ...state, settings: action.settings };
     default:
-      return board;
+      return state;
   }
 };
 
 export default function BoardContainer() {
-  const [board, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const isFirstRender = useIsFirstRender();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getBoard();
-      // console.log(response);
-      if (response) dispatch({ type: "UPDATE_BOARD", board: response });
+      const boardResponse = await getBoard();
+      if (boardResponse)
+        dispatch({ type: "UPDATE_BOARD", board: boardResponse });
+
+      const settingsResponse = await getSettings();
+      if (settingsResponse)
+        dispatch({ type: "UPDATE_SETTINGS", settings: settingsResponse });
     }
     fetchData();
   }, []);
@@ -77,13 +132,28 @@ export default function BoardContainer() {
   //using it to send updates to API every time board changes
   useEffect(() => {
     async function sendData() {
-      await updateBoard(board);
-      // const response = await updateBoard(board);
-      // console.log(response);
+      await updateBoard(state["board"]);
     }
 
     if (!isFirstRender) sendData();
-  }, [board, isFirstRender]);
+  }, [state["board"], isFirstRender]);
 
-  return <Board board={board} dispatch={dispatch} />;
+  useEffect(() => {
+    async function sendData() {
+      await updateSettings(state["settings"]);
+    }
+
+    if (!isFirstRender) sendData();
+  }, [state["settings"], isFirstRender]);
+
+  return (
+    <div>
+      <NavBar settings={state["settings"]} dispatch={dispatch} />
+      <Board
+        board={state["board"]}
+        settings={state["settings"]}
+        dispatch={dispatch}
+      />
+    </div>
+  );
 }
