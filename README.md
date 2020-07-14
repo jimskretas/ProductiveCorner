@@ -1,6 +1,6 @@
 # Productive Corner
 
-![Productive Corner](https://res.cloudinary.com/jimskretas/image/upload/v1586595977/productive-corner-app.png)
+![Productive Corner](https://res.cloudinary.com/jimskretas/image/upload/v1594736760/productive-corner-wide.png)
 
 ## Overview
 
