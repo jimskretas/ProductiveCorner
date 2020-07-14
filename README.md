@@ -28,12 +28,12 @@ The node.js REST API is [here](https://github.com/jimskretas/productive-corner-a
 - [x] User can create Text cards for note-taking.
 - [x] User can create Pomodoro Cards(read more [here](https://en.wikipedia.org/wiki/Pomodoro_Technique)):
   - [x] Start/stop buttons.
-  - [ ] Notification/alarm.
-  - [ ] Work & break sessions.
-- [ ] Delete all cards button in each list. (with "Are you sure" prompt)
-- [ ] Setting panel:
-  - [ ] Ability to change the work & break sessions length.
-  - [ ] Ability to change list card limits.
+  - [x] Notification/alarm.
+  - [x] Work & break sessions.
+- [x] Delete all cards button in each list. (with "Are you sure" prompt)
+- [x] Setting panel:
+  - [x] Ability to change the work & break sessions length.
+  - [x] Ability to change list card limits.
 
 ## Tech Used / Dependencies
 

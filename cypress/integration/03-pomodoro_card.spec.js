@@ -32,16 +32,12 @@ describe("Testing text cards", () => {
 
   it("Pomodoro cards should allow values between 1-60", () => {
     cy.get("[data-cy=backlog]").within(() => {
-      cy.get("input").last().type("{selectall}").type(60);
-      cy.get("input").last().should("have.value", "60");
-      cy.get("input").last().type("{selectall}").type(61);
-      cy.get("input").last().should("have.value", "60");
       cy.get("input").last().type("{selectall}").type(1);
       cy.get("input").last().should("have.value", "1");
       cy.get("input").last().type("{selectall}").type(-1);
       cy.get("input").last().should("have.value", "1");
-      cy.get("input").last().type("{selectall}").type(30);
-      cy.get("input").last().should("have.value", "30");
+      cy.get("input").last().type("{selectall}").type(25);
+      cy.get("input").last().should("have.value", "25");
     });
   });
 

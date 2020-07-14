@@ -32,7 +32,7 @@ export function addCardFunction(
   initialLength = 25
 ) {
   // check if there is space for a new card
-  if (board.columns[colId].cardIds.length === limit) return board;
+  if (board.columns[colId].cardIds.length >= limit) return board;
   if (typeof initialLength === "undefined") initialLength = 25;
 
   let newCardNumber = board.cardNumber + 1;
@@ -65,7 +65,7 @@ export function moveCardFunction(board, result, listLimits) {
 
   // check if there is space for a new card
   if (
-    board.columns[destination.droppableId].cardIds.length ===
+    board.columns[destination.droppableId].cardIds.length >=
     listLimits[destination.droppableId]
   )
     return board;

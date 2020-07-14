@@ -54,8 +54,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  // console.log(board);
-  // console.log(action);
   switch (action.type) {
     case "DELETE_CARD":
       return {
@@ -94,15 +92,10 @@ const reducer = (state, action) => {
       };
     case "UPDATE_BOARD":
       return { ...state, board: action.board };
-    case "CHANGE_LIST_LIMITS":
+    case "CHANGE_SETTINGS":
       return {
         ...state,
-        settings: { ...state["settings"], listLimits: action.listLimits },
-      };
-    case "CHANGE_SESSION_LENGTH":
-      return {
-        ...state,
-        settings: { ...state["settings"], sessionLength: action.sessionLength },
+        settings: action.settings,
       };
     case "UPDATE_SETTINGS": // to update the settings with info from api
       return { ...state, settings: action.settings };
@@ -148,7 +141,11 @@ export default function BoardContainer() {
 
   return (
     <div>
-      <NavBar settings={state["settings"]} dispatch={dispatch} />
+      <NavBar
+        board={state["board"]}
+        settings={state["settings"]}
+        dispatch={dispatch}
+      />
       <Board
         board={state["board"]}
         settings={state["settings"]}

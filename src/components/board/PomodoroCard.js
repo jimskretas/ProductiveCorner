@@ -26,7 +26,7 @@ export default function PomodoroCard(props) {
     sessionLength: { work: workLength, break: breakLength },
     dispatch,
   } = props;
-  const [content, setContent] = useState(card.content);
+  const [content, setContent] = useState(workLength * 60);
   const [stopped, setStopped] = useState(true);
   const [sessionType, setSessionType] = useState("work");
   const [open, setOpen] = useState(false);
@@ -84,7 +84,6 @@ export default function PomodoroCard(props) {
                             ? workLength * 60
                             : breakLength * 60
                         );
-                      else if (e.target.value > 60) setContent(60 * 60);
                       else if (e.target.value < 1) setContent(1 * 60);
                       else setContent(e.target.value * 60);
                     }}
@@ -113,12 +112,17 @@ export default function PomodoroCard(props) {
                           setContent(workLength * 60);
                         }
                         setStopped(true);
+                      } else {
+                        setContent(
+                          parseInt(minutes, 10) * 60 + parseInt(seconds, 10)
+                        );
                       }
-                      setContent(
-                        parseInt(minutes, 10) * 60 + parseInt(seconds, 10)
-                      );
                       return (
-                        <span>
+                        <span
+                          style={{
+                            color: sessionType === "break" ? "green" : "black",
+                          }}
+                        >
                           {zeroPad(minutes)}:{zeroPad(seconds)}
                         </span>
                       );
@@ -155,8 +159,8 @@ export default function PomodoroCard(props) {
         )}
       </Draggable>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="info">
-          {sessionType === "work" ? "Time for a break!" : "Break is over!"}
+        <Alert onClose={handleClose} severity="success">
+          {sessionType === "break" ? "Time for a break!" : "Break is over!"}
         </Alert>
       </Snackbar>
     </div>
