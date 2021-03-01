@@ -10,6 +10,8 @@ The node.js REST API is [here](https://github.com/jimskretas/productive-corner-a
 
 #### LIVE LINK : https://productive-corner.netlify.com/
 
+For demo purposes, you can use (demouser, 123456) to login.
+
 ## How to run
 
 1. Clone this project locally
